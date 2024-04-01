@@ -25,4 +25,5 @@ public class TodoDTO {
     private String username;
     private Date createdAt;
     private Date updatedAt;
+    private String Currency;
 }

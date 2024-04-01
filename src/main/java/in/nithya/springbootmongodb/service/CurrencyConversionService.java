@@ -46,5 +46,19 @@ public class CurrencyConversionService {
         return " "+baseCurrency+"-"+baseAmount+","+targetCurrency+"-"+convertedAmount;
 
     }
+
+
+    public double convertToINR(String currency, double amount) {
+        String API_URL = "https://api.fxratesapi.com/latest";
+        String url = API_URL + "?base=" + currency + "&symbols=INR";
+        ConversionResponse response = restTemplate.getForObject(url, ConversionResponse.class);
+
+        // Extract the exchange rate for INR from the response
+        assert response != null;
+        double exchangeRate = response.getRates().get("INR");
+
+        // Convert the amount to INR
+        return amount * exchangeRate;
+    }
 }
 
