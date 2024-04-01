@@ -21,14 +21,21 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class TodoController {
 
 
-    @Autowired
-    private TodoRepository todoRepo;
 
-    @Autowired
-    private CurrencyConversionService conversionService;
+    private final TodoRepository todoRepo;
 
+
+    private final CurrencyConversionService conversionService;
+
+
+    private final PaymentService paymentService;
     @Autowired
-    private PaymentService paymentService;
+    public TodoController(TodoRepository todoRepo, CurrencyConversionService conversionService, PaymentService paymentService) {
+        this.todoRepo = todoRepo;
+        this.conversionService = conversionService;
+        this.paymentService = paymentService;
+    }
+
 
     @GetMapping("/todos")
     public ResponseEntity<?>getAllTodos(){
