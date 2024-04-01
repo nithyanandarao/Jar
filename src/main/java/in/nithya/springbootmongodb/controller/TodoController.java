@@ -56,8 +56,9 @@ public class TodoController {
         if(todoOptional.isPresent()){
             TodoDTO todoToSave=todoOptional.get();
             todoToSave.setCompleted(todo.getCompleted() != null ? todo.getCompleted(): todoToSave.getCompleted());
-            todoToSave.setTodo(todo.getCompleted()!=null? todo.getTodo():todoToSave.getTodo());
+            todoToSave.setPayment(todo.getCompleted()!=null? todo.getPayment():todoToSave.getPayment());
             todoToSave.setDescription(todo.getDescription()!=null? todo.getDescription():todoToSave.getDescription());
+            todoToSave.setUsername(todo.getUsername()!=null? todo.getUsername():todoToSave.getUsername());
             todoToSave.setUpdatedAt(new Date(System.currentTimeMillis()));
             todoRepo.save(todoToSave);
             return new ResponseEntity<>(todoToSave,HttpStatus.OK);

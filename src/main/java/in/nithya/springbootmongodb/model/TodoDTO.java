@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Setter
@@ -18,9 +19,10 @@ public class TodoDTO {
 
     @Id
     private String id;
-    private String todo;
+    private String payment;
     private String description;
     private Boolean completed;
+    private String username;
     private Date createdAt;
     private Date updatedAt;
 }
