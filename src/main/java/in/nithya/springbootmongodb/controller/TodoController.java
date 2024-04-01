@@ -3,6 +3,7 @@ package in.nithya.springbootmongodb.controller;
 import in.nithya.springbootmongodb.model.TodoDTO;
 import in.nithya.springbootmongodb.repository.TodoRepository;
 import in.nithya.springbootmongodb.service.CurrencyConversionService;
+import in.nithya.springbootmongodb.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,16 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 public class TodoController {
+
+
     @Autowired
     private TodoRepository todoRepo;
 
     @Autowired
     private CurrencyConversionService conversionService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping("/todos")
     public ResponseEntity<?>getAllTodos(){
@@ -37,7 +43,7 @@ public class TodoController {
     @PostMapping("/todosPost")
     public ResponseEntity<?>createTodo(@RequestBody TodoDTO todo){
         try {
-            double amountInINR = conversionService.convertToINR(todo.getCurrency(), Double.parseDouble(todo.getPayment()));
+            double amountInINR = conversionService.convertToINR(todo.getPaymentMadeIn(), Double.parseDouble(todo.getPayment()));
             todo.setPayment(String.valueOf(amountInINR));
             todo.setCreatedAt(new Date(System.currentTimeMillis()));
             todoRepo.save(todo);
@@ -83,6 +89,12 @@ public class TodoController {
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), NOT_FOUND);
         }
+    }
+
+    @GetMapping("/totalPayments")
+    public ResponseEntity<Double> getTotalPayments() {
+        double totalPayments = paymentService.getTotalPayments();
+        return new ResponseEntity<>(totalPayments, HttpStatus.OK);
     }
 
 }

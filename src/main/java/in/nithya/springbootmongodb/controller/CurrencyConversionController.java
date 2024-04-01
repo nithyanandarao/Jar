@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CurrencyConversionController {
 
+    private final CurrencyConversionService conversionService;
+
     @Autowired
-    private CurrencyConversionService conversionService;
+    public CurrencyConversionController(CurrencyConversionService conversionService) {
+        this.conversionService = conversionService;
+    }
 
     @GetMapping("/convert")
     public String convertCurrency(
@@ -21,5 +25,7 @@ public class CurrencyConversionController {
         return conversionService.convertCurrency(id, baseCurrency, targetCurrency);
 
     }
+
+
 }
 
