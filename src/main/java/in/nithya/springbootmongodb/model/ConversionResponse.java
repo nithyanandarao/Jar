@@ -1,4 +1,4 @@
-package in.nithya.springbootmongodb.service;
+package in.nithya.springbootmongodb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

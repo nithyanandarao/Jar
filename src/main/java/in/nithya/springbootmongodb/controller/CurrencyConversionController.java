@@ -14,10 +14,11 @@ public class CurrencyConversionController {
 
     @GetMapping("/convert")
     public String convertCurrency(
+            @RequestParam String id,
             @RequestParam String baseCurrency,
-            @RequestParam String targetCurrency,
-            @RequestParam double amount) {
-        return conversionService.convertCurrency(baseCurrency, targetCurrency, amount);
+            @RequestParam String targetCurrency
+            ) {
+        return conversionService.convertCurrency(id, baseCurrency, targetCurrency);
 
     }
 }

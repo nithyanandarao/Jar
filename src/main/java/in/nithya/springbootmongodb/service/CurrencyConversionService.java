@@ -1,14 +1,34 @@
 package in.nithya.springbootmongodb.service;
 
+import in.nithya.springbootmongodb.model.ConversionResponse;
+import in.nithya.springbootmongodb.model.TodoDTO;
+import in.nithya.springbootmongodb.repository.TodoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CurrencyConversionService {
 
+    @Autowired
+    private TodoRepository todoRepository;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public String convertCurrency(String baseCurrency, String targetCurrency, double amount) {
+    public double getAmountById(String id) {
+        Optional<TodoDTO> optionalCurrencyData = todoRepository.findById(id);
+        if (optionalCurrencyData.isPresent()) {
+            return Double.parseDouble(optionalCurrencyData.get().getPayment());
+        } else {
+            throw new IllegalArgumentException("Currency data not found for ID: " + id);
+        }
+    }
+
+    public String convertCurrency(String id,String baseCurrency, String targetCurrency) {
+        double baseAmount = getAmountById(id);
         String API_URL = "https://api.fxratesapi.com/latest";
         String url = API_URL + "?base=" + baseCurrency;
         // Make a REST call to the external API
@@ -19,11 +39,11 @@ public class CurrencyConversionService {
         double exchangeRate = response.getRates().get(targetCurrency);
 
         // Calculate the converted amount
-        double convertedAmount = amount * exchangeRate;
+        double convertedAmount = baseAmount * exchangeRate;
 
         // Construct and return the response string
 
-        return " "+baseCurrency+"-"+amount+","+targetCurrency+"-"+convertedAmount;
+        return " "+baseCurrency+"-"+baseAmount+","+targetCurrency+"-"+convertedAmount;
 
     }
 }
