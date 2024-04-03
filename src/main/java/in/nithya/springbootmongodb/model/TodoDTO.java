@@ -26,4 +26,5 @@ public class TodoDTO {
     private Date createdAt;
     private Date updatedAt;
     private String paymentMadeIn;
+    private String role;
 }

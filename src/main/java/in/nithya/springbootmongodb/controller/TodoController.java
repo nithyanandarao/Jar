@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static javax.security.auth.callback.ConfirmationCallback.OK;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
