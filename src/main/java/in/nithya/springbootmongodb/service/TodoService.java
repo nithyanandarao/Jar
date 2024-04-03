@@ -35,7 +35,7 @@ public class TodoService {
             todoRepo.save(todoToSave);
             return new ResponseEntity<>(todoToSave, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Todo not found with id " + id, HttpStatus.NOT_FOUND);
+            return  new ResponseEntity<>("Todo not found with id " + id, HttpStatus.NOT_FOUND);
         }
     }
 
